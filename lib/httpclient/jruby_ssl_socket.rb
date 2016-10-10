@@ -498,6 +498,7 @@ unless defined?(SSLSocket)
       factory = ctx.getSocketFactory
       begin
         ssl_socket = factory.createSocket(socket, dest.host, dest.port, true)
+        ssl_socket.setSoTimeout(30_000) # hardcode socket timeout for debugging purposes
         ssl_socket.setEnabledProtocols([ssl_version].to_java(java.lang.String)) if ssl_version != DEFAULT_SSL_PROTOCOL
         if config.ciphers != SSLConfig::CIPHERS_DEFAULT
           ssl_socket.setEnabledCipherSuites(config.ciphers.to_java(java.lang.String))
